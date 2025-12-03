@@ -33,10 +33,43 @@ public class Plant {
 		this.setAll(original.name, original.tempFahrenheit, original.uses);
 	}
 
-	//TODO: Step 1 = CSV string constructor
+	//Complete: Step 1 = CSV string constructor
+	public Plant(String csvLine) throws IllegalArgumentException {
+		// Error check the whole string
+		if(csvLine == null || csvLine.isEmpty()) {
+			throw new IllegalArgumentException("CSV line is null or empty.");
+		}
 
+		// Use String's split() method
+		String[] parts = csvLine.split(",");
 
+		// Error check the parts (must be 3)
+		if(parts.length != 3) {
+			throw new IllegalArgumentException("Invalid CSV: Expected 3 values, found " + parts.length + " in line: " + csvLine);
+		}
 
+		try {
+			// Parse and trim data
+			String name = parts[0].trim();
+			double temp = Double.parseDouble(parts[1].trim());
+			String uses = parts[2].trim();
+
+			// Use the validation logic from the setters
+			if (!this.setName(name)) {
+				throw new IllegalArgumentException("Invalid name value passed: " + name);
+			}
+			if (!this.setTempFahrenheit(temp)) {
+				throw new IllegalArgumentException("Invalid temperature (F) value passed: " + temp);
+			}
+			if (!this.setUses(uses)) {
+				throw new IllegalArgumentException("Invalid uses value passed: " + uses);
+			}
+
+		} catch (NumberFormatException e) {
+			// This catches errors from Double.parseDouble()
+			throw new IllegalArgumentException("Invalid temperature format: '" + parts[1].trim() + "'", e);
+		}
+	}
 
 	// MUTATORS/SETTERS
 	public boolean setName(String name) {
