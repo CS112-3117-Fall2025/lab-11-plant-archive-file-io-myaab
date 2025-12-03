@@ -1,4 +1,4 @@
-// complete: Step 2 - Import file input statements here
+// complete : Step 2 - Import file input statements here
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
